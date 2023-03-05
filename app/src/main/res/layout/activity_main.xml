@@ -4,19 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="@dimen/main_layout_padding"
     tools:context=".MainActivity">
 
     <ImageView
         android:id="@+id/imageViewStart"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/flStart"
+        android:src="@drawable/logo"
         android:layout_width="match_parent"
         android:layout_height="220dp" />
 
     <FrameLayout
         android:id="@+id/flStart"
         app:layout_constraintTop_toBottomOf="@+id/imageViewStart"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="150dp"
-        android:layout_height="150dp" />
+        android:layout_height="150dp"
+        android:background="@drawable/item_circular_clicked">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_Start"
+            android:layout_gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/default_btn_text_size"
+            android:textStyle="bold"/>
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

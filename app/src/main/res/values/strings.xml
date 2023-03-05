@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">StayFit</string>
+    <string name="btn_Start">START</string>
 </resources>
