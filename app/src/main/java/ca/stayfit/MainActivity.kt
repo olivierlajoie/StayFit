@@ -1,5 +1,6 @@
 package ca.stayfit
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.FrameLayout
@@ -15,11 +16,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding?.root)
 
         binding?.flStart?.setOnClickListener {
-            Toast.makeText(
-                this,
-                "Here we start the excercise.",
-                Toast.LENGTH_SHORT)
-                .show()
+            startActivity(Intent(this, ExerciseActivity::class.java))
         }
     }
 
