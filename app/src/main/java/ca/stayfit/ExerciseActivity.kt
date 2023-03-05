@@ -3,6 +3,7 @@ package ca.stayfit
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.view.View
 import android.widget.Toast
 import ca.stayfit.databinding.ActivityExerciseBinding
 import ca.stayfit.databinding.ActivityMainBinding
@@ -11,6 +12,8 @@ class ExerciseActivity : AppCompatActivity() {
     private var binding: ActivityExerciseBinding? = null
     private var restTimer: CountDownTimer? = null
     private var restProgress = 0
+    private var exerciseTimer: CountDownTimer? = null
+    private var exerciseProgress = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,12 +33,29 @@ class ExerciseActivity : AppCompatActivity() {
     }
 
     private fun setupRestView() {
+        binding?.flProgressBar?.visibility = View.VISIBLE
+        binding?.flProgressBarExercise?.visibility = View.INVISIBLE
+        binding?.tvTitle?.text = "GET READY FOR"
+
         if(restTimer != null) {
             restTimer?.cancel()
             restProgress = 0
         }
 
         setRestProgressBar()
+    }
+
+    private fun setupExerciseView() {
+        binding?.flProgressBar?.visibility = View.INVISIBLE
+        binding?.flProgressBarExercise?.visibility = View.VISIBLE
+        binding?.tvTitle?.text = "EXERCISE NAME"
+
+        if(exerciseTimer != null) {
+            exerciseTimer?.cancel()
+            exerciseProgress = 0
+        }
+
+        setExerciseProgressBar()
     }
 
     private fun setRestProgressBar() {
@@ -54,9 +74,32 @@ class ExerciseActivity : AppCompatActivity() {
                     "Here now we will start the excercise.",
                     Toast.LENGTH_SHORT)
                     .show()
+
+                setupExerciseView()
             }
         }.start()
+    }
 
+    private fun setExerciseProgressBar() {
+        binding?.progressBarExercise?.progress = exerciseProgress
+
+        exerciseTimer = object : CountDownTimer(30000, 1000) {
+            override fun onTick(p0: Long) {
+                exerciseProgress++
+                binding?.progressBarExercise?.progress = 30 - exerciseProgress
+                binding?.tvTimerExercise?.text = (30 - exerciseProgress).toString()
+            }
+
+            override fun onFinish() {
+                Toast.makeText(
+                    this@ExerciseActivity,
+                    "The exercise is done! Let's rest now!",
+                    Toast.LENGTH_SHORT)
+                    .show()
+
+                setupRestView()
+            }
+        }.start()
     }
 
     override fun onDestroy() {
@@ -65,6 +108,12 @@ class ExerciseActivity : AppCompatActivity() {
             restTimer?.cancel()
             restProgress = 0
         }
+
+        if(exerciseTimer != null) {
+            exerciseTimer?.cancel()
+            exerciseProgress = 0
+        }
+
         binding = null
     }
 }
