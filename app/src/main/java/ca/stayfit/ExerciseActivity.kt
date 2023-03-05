@@ -6,7 +6,7 @@ import android.os.CountDownTimer
 import android.view.View
 import android.widget.Toast
 import ca.stayfit.databinding.ActivityExerciseBinding
-import ca.stayfit.databinding.ActivityMainBinding
+import com.bumptech.glide.Glide
 
 class ExerciseActivity : AppCompatActivity() {
     private var binding: ActivityExerciseBinding? = null
@@ -30,6 +30,12 @@ class ExerciseActivity : AppCompatActivity() {
         }
 
         setupRestView()
+
+        binding?.ex1?.let {
+            Glide.with(this)
+                .load(R.drawable.deadlift)
+                .into(it)
+        }
     }
 
     private fun setupRestView() {

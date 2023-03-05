@@ -15,6 +15,15 @@
         android:background="@color/white"
         app:titleTextColor="@color/colorPrimary"/>
 
+    <ImageView
+        android:id="@+id/ex1"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        app:layout_constraintBottom_toTopOf="@+id/tvTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarExercise" />
+
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
