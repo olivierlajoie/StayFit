@@ -1,5 +1,7 @@
 package ca.stayfit
 
+import android.media.MediaPlayer
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -7,6 +9,7 @@ import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import ca.stayfit.databinding.ActivityExerciseBinding
 import com.bumptech.glide.Glide
 import org.w3c.dom.Text
@@ -22,6 +25,8 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private var exerciseList: ArrayList<ExerciseModel>? = null
     private var currentExerciseIndex = -1
     private var tts: TextToSpeech? = null
+    private var player: MediaPlayer? = null
+    private var exerciseAdapter: ExerciseStatusAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,9 +47,26 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         tts = TextToSpeech(this, this)
 
         setupRestView()
+        setupRecyclerView()
+    }
+
+    private fun setupRecyclerView() {
+        binding?.rvExerciseStatus?.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        exerciseAdapter = ExerciseStatusAdapter(exerciseList!!)
+        binding?.rvExerciseStatus?.adapter = exerciseAdapter
     }
 
     private fun setupRestView() {
+        try {
+            val soundURI = Uri.parse("android.resource://" + packageName + "/" + R.raw.ding.toString())
+            player = MediaPlayer.create(applicationContext, soundURI)
+            player?.isLooping = false
+            player?.start()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
         binding?.flProgressBarRest?.visibility = View.VISIBLE
         binding?.tvRest?.visibility = View.VISIBLE
         binding?.tvUpcomingLabel?.visibility = View.VISIBLE
@@ -61,7 +83,7 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
         speakOut("Get ready for the next exercise")
 
-        binding?.tvUpcomingExercise?.text = exerciseList?.get(currentExerciseIndex + 1)!!.getName()
+        binding?.tvUpcomingExercise?.text = exerciseList!![currentExerciseIndex + 1].getName()
 
         setRestProgressBar()
     }
@@ -81,12 +103,12 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             exerciseProgress = 0
         }
 
-        speakOut(exerciseList?.get(currentExerciseIndex)!!.getName())
+        speakOut(exerciseList!![currentExerciseIndex].getName())
 
-        binding?.tvExerciseName?.text = exerciseList?.get(currentExerciseIndex)!!.getName()
+        binding?.tvExerciseName?.text = exerciseList!![currentExerciseIndex].getName()
         binding?.ivExercise?.let {
             Glide.with(this)
-                .load(exerciseList?.get(currentExerciseIndex)!!.getImage())
+                .load(exerciseList!![currentExerciseIndex].getImage())
                 .into(it)
         }
 
@@ -105,6 +127,8 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
             override fun onFinish() {
                 currentExerciseIndex++
+                exerciseList!![currentExerciseIndex].setIsSelected(true)
+                exerciseAdapter!!.notifyItemChanged(currentExerciseIndex)
                 setupExerciseView()
             }
         }.start()
@@ -121,6 +145,10 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             }
 
             override fun onFinish() {
+                exerciseList!![currentExerciseIndex].setIsSelected(false)
+                exerciseList!![currentExerciseIndex].setIsCompleted(true)
+                exerciseAdapter!!.notifyItemChanged(currentExerciseIndex)
+
                 if(currentExerciseIndex < exerciseList?.size!! - 1) {
                     setupRestView()
                 } else {
@@ -132,6 +160,20 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                 }
             }
         }.start()
+    }
+
+    override fun onInit(status: Int) {
+        if(status == TextToSpeech.SUCCESS) {
+            val result = tts!!.setLanguage(Locale.US)
+            if(result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED)
+                Log.e("TTS", "The language specified is not supported!")
+        }
+        else
+            Log.e("TTS", "Init failed!")
+    }
+
+    private fun speakOut(text: String) {
+        tts!!.speak(text, TextToSpeech.QUEUE_FLUSH, null, "")
     }
 
     override fun onDestroy() {
@@ -151,20 +193,10 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             tts!!.shutdown()
         }
 
-        binding = null
-    }
-
-    override fun onInit(status: Int) {
-        if(status == TextToSpeech.SUCCESS) {
-            val result = tts!!.setLanguage(Locale.US)
-            if(result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED)
-                Log.e("TTS", "The language specified is not supported!")
+        if(player != null) {
+            player!!.stop()
         }
-        else
-            Log.e("TTS", "Init failed!")
-    }
 
-    private fun speakOut(text: String) {
-        tts!!.speak(text, TextToSpeech.QUEUE_FLUSH, null, "")
+        binding = null
     }
 }
