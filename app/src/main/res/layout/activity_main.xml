@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:text="@string/btn_Start"
             android:layout_gravity="center"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/black"
             android:textSize="@dimen/default_btn_text_size"
             android:textStyle="bold"/>
     </FrameLayout>
