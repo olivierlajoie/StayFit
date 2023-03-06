@@ -17,9 +17,11 @@
         <entry key="..\:/Users/olivi/AndroidStudioProjects/StayFit/app/src/main/res/layout/activity_bmi.xml" value="0.1" />
         <entry key="..\:/Users/olivi/AndroidStudioProjects/StayFit/app/src/main/res/layout/activity_exercise.xml" value="0.20833333333333334" />
         <entry key="..\:/Users/olivi/AndroidStudioProjects/StayFit/app/src/main/res/layout/activity_finish.xml" value="0.14990942028985507" />
+        <entry key="..\:/Users/olivi/AndroidStudioProjects/StayFit/app/src/main/res/layout/activity_history.xml" value="0.1" />
         <entry key="..\:/Users/olivi/AndroidStudioProjects/StayFit/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/olivi/AndroidStudioProjects/StayFit/app/src/main/res/layout/dialog_back_confirmation.xml" value="0.146875" />
         <entry key="..\:/Users/olivi/AndroidStudioProjects/StayFit/app/src/main/res/layout/item_exercise_status.xml" value="0.20471014492753623" />
+        <entry key="..\:/Users/olivi/AndroidStudioProjects/StayFit/app/src/main/res/layout/item_history_row.xml" value="0.1" />
       </map>
     </option>
   </component>

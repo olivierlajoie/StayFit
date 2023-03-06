@@ -3,4 +3,6 @@
     <string name="btn_Start">START</string>
     <string name="btn_BMI">BMI</string>
     <string name="calculator">Calculator</string>
+    <string name="history">History</string>
+    <string name="no_data_available">NO DATA AVAILABLE</string>
 </resources>

@@ -2,7 +2,6 @@ package ca.stayfit
 
 import android.os.Bundle
 import android.view.View
-import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ca.stayfit.databinding.ActivityBmiBinding

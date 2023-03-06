@@ -22,6 +22,10 @@ class MainActivity : AppCompatActivity() {
         binding?.flBMI?.setOnClickListener {
             startActivity(Intent(this, BMIActivity::class.java))
         }
+
+        binding?.flHistory?.setOnClickListener {
+            startActivity(Intent(this, HistoryActivity::class.java))
+        }
     }
 
     override fun onDestroy() {

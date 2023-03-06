@@ -38,9 +38,9 @@
         android:id="@+id/flBMI"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:layout_marginStart="50dp"
         android:background="@drawable/item_circular_color_accent_background"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/flStart">
 
@@ -55,15 +55,47 @@
     </FrameLayout>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/textView"
+        android:layout_width="150dp"
+        android:layout_height="30dp"
         android:layout_gravity="center"
+        android:textAlignment="center"
         android:text="@string/calculator"
         android:textColor="@color/colorAccent"
         android:textSize="@dimen/default_btn_text_size"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/flBMI"
+        app:layout_constraintStart_toStartOf="@+id/flBMI"
         app:layout_constraintTop_toBottomOf="@+id/flBMI" />
+
+    <FrameLayout
+        android:id="@+id/flHistory"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginEnd="50dp"
+        android:background="@drawable/item_circular_color_accent_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/flStart">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_gravity="center"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_calendar" />
+    </FrameLayout>
+
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        android:text="@string/history"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/default_btn_text_size"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/flHistory"
+        app:layout_constraintStart_toStartOf="@+id/flHistory"
+        app:layout_constraintTop_toBottomOf="@+id/flHistory" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
