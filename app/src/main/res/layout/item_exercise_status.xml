@@ -3,7 +3,7 @@
     android:id="@+id/tvItem"
     android:layout_width="25dp"
     android:layout_height="25dp"
-    android:layout_margin="1dp"
+    android:layout_margin="5dp"
     android:background="@drawable/item_circular_color_gray_background"
     android:gravity="center"
     android:padding="3dp"
