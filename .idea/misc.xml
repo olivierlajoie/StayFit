@@ -5,13 +5,20 @@
       <map>
         <entry key="..\:/Users/olivi/AndroidStudioProjects/StayFit/app/src/main/res/drawable/circular_progress_bar.xml" value="0.29583333333333334" />
         <entry key="..\:/Users/olivi/AndroidStudioProjects/StayFit/app/src/main/res/drawable/circular_progress_bar_gray.xml" value="0.29583333333333334" />
+        <entry key="..\:/Users/olivi/AndroidStudioProjects/StayFit/app/src/main/res/drawable/drawable_radio_group_tab_background.xml" value="0.16302083333333334" />
+        <entry key="..\:/Users/olivi/AndroidStudioProjects/StayFit/app/src/main/res/drawable/drawable_units_tab_selector.xml" value="0.16302083333333334" />
+        <entry key="..\:/Users/olivi/AndroidStudioProjects/StayFit/app/src/main/res/drawable/drawable_units_tab_text_color_selector.xml" value="0.16302083333333334" />
+        <entry key="..\:/Users/olivi/AndroidStudioProjects/StayFit/app/src/main/res/drawable/ic_action_done.xml" value="0.23425925925925925" />
         <entry key="..\:/Users/olivi/AndroidStudioProjects/StayFit/app/src/main/res/drawable/item_circular_clicked.xml" value="0.11296296296296296" />
         <entry key="..\:/Users/olivi/AndroidStudioProjects/StayFit/app/src/main/res/drawable/item_circular_color_accent_background.xml" value="0.29583333333333334" />
         <entry key="..\:/Users/olivi/AndroidStudioProjects/StayFit/app/src/main/res/drawable/item_circular_color_accent_border.xml" value="0.29583333333333334" />
         <entry key="..\:/Users/olivi/AndroidStudioProjects/StayFit/app/src/main/res/drawable/item_circular_color_gray_background.xml" value="0.27685185185185185" />
         <entry key="..\:/Users/olivi/AndroidStudioProjects/StayFit/app/src/main/res/drawable/item_circular_color_thin_background.xml" value="0.2462962962962963" />
+        <entry key="..\:/Users/olivi/AndroidStudioProjects/StayFit/app/src/main/res/layout/activity_bmi.xml" value="0.1" />
         <entry key="..\:/Users/olivi/AndroidStudioProjects/StayFit/app/src/main/res/layout/activity_exercise.xml" value="0.20833333333333334" />
+        <entry key="..\:/Users/olivi/AndroidStudioProjects/StayFit/app/src/main/res/layout/activity_finish.xml" value="0.14990942028985507" />
         <entry key="..\:/Users/olivi/AndroidStudioProjects/StayFit/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/olivi/AndroidStudioProjects/StayFit/app/src/main/res/layout/dialog_back_confirmation.xml" value="0.146875" />
         <entry key="..\:/Users/olivi/AndroidStudioProjects/StayFit/app/src/main/res/layout/item_exercise_status.xml" value="0.20471014492753623" />
       </map>
     </option>

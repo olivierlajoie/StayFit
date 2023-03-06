@@ -1,5 +1,7 @@
 package ca.stayfit
 
+import android.app.Dialog
+import android.content.Intent
 import android.media.MediaPlayer
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +13,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import ca.stayfit.databinding.ActivityExerciseBinding
+import ca.stayfit.databinding.DialogBackConfirmationBinding
 import com.bumptech.glide.Glide
 import org.w3c.dom.Text
 import java.util.*
@@ -27,6 +30,8 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private var tts: TextToSpeech? = null
     private var player: MediaPlayer? = null
     private var exerciseAdapter: ExerciseStatusAdapter? = null
+    private var restTimerDuration: Long = 1
+    private var excerciseTimerDuration: Long = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,11 +40,13 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
         setSupportActionBar(binding?.toolbarExercise)
 
-        if(supportActionBar != null)
-                supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        if(supportActionBar != null) {
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            supportActionBar?.title = "Working out"
+        }
 
         binding?.toolbarExercise?.setNavigationOnClickListener {
-            onBackPressed()
+            customDialogBackConfirmation()
         }
 
         exerciseList = Constants.defaultExerciseList()
@@ -48,6 +55,29 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
         setupRestView()
         setupRecyclerView()
+    }
+
+    override fun onBackPressed() {
+        customDialogBackConfirmation()
+    }
+
+    private fun customDialogBackConfirmation() {
+        val dialog = Dialog(this)
+        val dialogBinding = DialogBackConfirmationBinding.inflate(layoutInflater)
+
+        dialog.setContentView(dialogBinding.root)
+        dialog.setCanceledOnTouchOutside(false)
+
+        dialogBinding.tvYes.setOnClickListener {
+            this@ExerciseActivity.finish()
+            dialog.dismiss()
+        }
+
+        dialogBinding.tvNo.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
     }
 
     private fun setupRecyclerView() {
@@ -118,7 +148,7 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private fun setRestProgressBar() {
         binding?.progressBarRest?.progress = restProgress
 
-        restTimer = object : CountDownTimer(10000, 1000) {
+        restTimer = object : CountDownTimer(restTimerDuration * 1000, 1000) {
             override fun onTick(p0: Long) {
                 restProgress++
                 binding?.progressBarRest?.progress = 10 - restProgress
@@ -137,7 +167,7 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private fun setExerciseProgressBar() {
         binding?.progressBarExercise?.progress = exerciseProgress
 
-        exerciseTimer = object : CountDownTimer(30000, 1000) {
+        exerciseTimer = object : CountDownTimer(excerciseTimerDuration * 1000, 1000) {
             override fun onTick(p0: Long) {
                 exerciseProgress++
                 binding?.progressBarExercise?.progress = 30 - exerciseProgress
@@ -152,11 +182,8 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                 if(currentExerciseIndex < exerciseList?.size!! - 1) {
                     setupRestView()
                 } else {
-                    Toast.makeText(
-                        this@ExerciseActivity,
-                        "Congratulations! You have completed the workout.",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    finish()
+                    startActivity(Intent(this@ExerciseActivity, FinishActivity::class.java))
                 }
             }
         }.start()

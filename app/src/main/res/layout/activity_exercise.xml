@@ -13,7 +13,7 @@
         android:layout_height="?android:actionBarSize"
         android:theme="@style/ToolBarTheme"
         android:background="@color/white"
-        app:titleTextColor="@color/colorPrimary"/>
+        app:titleTextColor="@color/black"/>
 
     <TextView
         android:id="@+id/tvRest"
