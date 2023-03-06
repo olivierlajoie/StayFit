@@ -14,6 +14,8 @@ class ExerciseActivity : AppCompatActivity() {
     private var restProgress = 0
     private var exerciseTimer: CountDownTimer? = null
     private var exerciseProgress = 0
+    private var exerciseList: ArrayList<ExerciseModel>? = null
+    private var currentExerciseIndex = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,58 +31,68 @@ class ExerciseActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-        setupRestView()
+        exerciseList = Constants.defaultExerciseList()
 
-        binding?.ex1?.let {
-            Glide.with(this)
-                .load(R.drawable.deadlift)
-                .into(it)
-        }
+        setupRestView()
     }
 
     private fun setupRestView() {
-        binding?.flProgressBar?.visibility = View.VISIBLE
+        binding?.flProgressBarRest?.visibility = View.VISIBLE
+        binding?.tvRest?.visibility = View.VISIBLE
+        binding?.tvUpcomingLabel?.visibility = View.VISIBLE
+        binding?.tvUpcomingExercise?.visibility = View.VISIBLE
+
         binding?.flProgressBarExercise?.visibility = View.INVISIBLE
-        binding?.tvTitle?.text = "GET READY FOR"
+        binding?.tvExerciseName?.visibility = View.INVISIBLE
+        binding?.ivExercise?.visibility = View.INVISIBLE
 
         if(restTimer != null) {
             restTimer?.cancel()
             restProgress = 0
         }
 
+        binding?.tvUpcomingExercise?.text = exerciseList?.get(currentExerciseIndex + 1)!!.getName()
+
         setRestProgressBar()
     }
 
     private fun setupExerciseView() {
-        binding?.flProgressBar?.visibility = View.INVISIBLE
+        binding?.flProgressBarRest?.visibility = View.INVISIBLE
+        binding?.tvRest?.visibility = View.INVISIBLE
+        binding?.tvUpcomingLabel?.visibility = View.INVISIBLE
+        binding?.tvUpcomingExercise?.visibility = View.INVISIBLE
+
         binding?.flProgressBarExercise?.visibility = View.VISIBLE
-        binding?.tvTitle?.text = "EXERCISE NAME"
+        binding?.tvExerciseName?.visibility = View.VISIBLE
+        binding?.ivExercise?.visibility = View.VISIBLE
 
         if(exerciseTimer != null) {
             exerciseTimer?.cancel()
             exerciseProgress = 0
         }
 
+        binding?.tvExerciseName?.text = exerciseList?.get(currentExerciseIndex)!!.getName()
+        binding?.ivExercise?.let {
+            Glide.with(this)
+                .load(exerciseList?.get(currentExerciseIndex)!!.getImage())
+                .into(it)
+        }
+
         setExerciseProgressBar()
     }
 
     private fun setRestProgressBar() {
-        binding?.progressBar?.progress = restProgress
+        binding?.progressBarRest?.progress = restProgress
 
         restTimer = object : CountDownTimer(10000, 1000) {
             override fun onTick(p0: Long) {
                 restProgress++
-                binding?.progressBar?.progress = 10 - restProgress
+                binding?.progressBarRest?.progress = 10 - restProgress
                 binding?.tvTimer?.text = (10 - restProgress).toString()
             }
 
             override fun onFinish() {
-                Toast.makeText(
-                    this@ExerciseActivity,
-                    "Here now we will start the excercise.",
-                    Toast.LENGTH_SHORT)
-                    .show()
-
+                currentExerciseIndex++
                 setupExerciseView()
             }
         }.start()
@@ -97,13 +109,15 @@ class ExerciseActivity : AppCompatActivity() {
             }
 
             override fun onFinish() {
-                Toast.makeText(
-                    this@ExerciseActivity,
-                    "The exercise is done! Let's rest now!",
-                    Toast.LENGTH_SHORT)
-                    .show()
-
-                setupRestView()
+                if(currentExerciseIndex < exerciseList?.size!! - 1) {
+                    setupRestView()
+                } else {
+                    Toast.makeText(
+                        this@ExerciseActivity,
+                        "Congratulations! You have completed the workout.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         }.start()
     }
